@@ -12,6 +12,8 @@
   <img src='./images/QRcode.jpg' height='150px' width='150px'>
 </div>
 
+You can also try on this page: [https://ai.minivision.cn/#/coreability/cartoon](https://ai.minivision.cn/#/coreability/cartoon)
+
 ## Introduce
 
 The aim of portrait cartoon stylization is to transform real photos into cartoon images with portrait's ID information and texture details. We use Generative Adversarial Network method to realize the mapping of picture to cartoon. Considering the difficulty in obtaining paired data and the non-corresponding shape of input and output, we adopt unpaired image translation fashion.
@@ -42,15 +44,15 @@ We also pre-process the data to a fixed pattern to help reduce the difficulty of
 ### Clone
 
 ```
-git clone https://github.com/minivision-ailab/photo2cartoon.git
+git clone https://github.com/minivision-ai/photo2cartoon.git
 cd ./photo2cartoon
 ```
 
 ### Download
 
-[Google Drive](https://drive.google.com/open?id=1eDNGZT3jszHLXQ9XGIUPtcu72HdBmHuX) | [Baidu Cloud](https://pan.baidu.com/s/1DxWWBAoaBpsei_rynZUZzw) acess code: z2nm
+[Google Drive](https://drive.google.com/open?id=1lsQS8hOCquMFKJFhK_z-n03ixWGkjT2P) | [Baidu Cloud](https://pan.baidu.com/s/1MsT3-He3UGipKhUi4OcCJw) acess code: y2ch
 
-1. Put the pre-trained photo2cartoon model **photo2cartoon_weights.pt** into `models` folder.
+1. Put the pre-trained photo2cartoon model **photo2cartoon_weights.pt** into `models` folder (update on may 4, 2020).
 2. Place the head segmentation model **seg_model_384.pb** in `utils` folder. 
 3. Put the pre-trained face recognition model **model_mobilefacenet.pth** into `models` folder (From [InsightFace_Pytorch](https://github.com/TreB1eN/InsightFace_Pytorch)).
 4. Open-source cartoon dataset **`cartoon_data/`** contains `trainB` and `testB`.
@@ -113,6 +115,11 @@ python train.py --dataset photo2cartoon
 Load pre-trained weights:
 ```
 python train.py --dataset photo2cartoon --pretrained_weights models/photo2cartoon_weights.pt
+```
+
+Train with Multi-GPU:
+```
+python train.py --dataset photo2cartoon --batch_size 4 --gpu_ids 0 1 2 3
 ```
 
 ## Q&A

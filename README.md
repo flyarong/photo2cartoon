@@ -6,11 +6,15 @@
 
 **中文版** | [English Version](README_EN.md)
 
-该项目为[小视科技](https://www.minivision.cn/)卡通肖像探索项目。您可使用微信扫描下方二维码体验卡通化效果。
+该项目为[小视科技](https://www.minivision.cn/)卡通肖像探索项目。您可使用微信扫描下方二维码或搜索“AI卡通秀”小程序体验卡通化效果。
 
 <div>
   <img src='./images/QRcode.jpg' height='150px' width='150px'>
 </div>
+
+也可以前往我们的ai开放平台进行在线体验：[https://ai.minivision.cn/#/coreability/cartoon](https://ai.minivision.cn/#/coreability/cartoon)
+
+技术交流QQ群：937627932
 
 ## 简介
 人像卡通风格渲染的目标是，在保持原图像ID信息和纹理细节的同时，将真实照片转换为卡通风格的非真实感图像。我们的思路是，从大量照片/卡通数据中习得照片到卡通画的映射。一般而言，基于成对数据的pix2pix方法能达到较好的图像转换效果，但本任务的输入输出轮廓并非一一对应，例如卡通风格的眼睛更大、下巴更瘦；且成对的数据绘制难度大、成本较高，因此我们采用unpaired image translation方法来实现。
@@ -41,14 +45,14 @@ Unpaired image translation流派最经典方法是CycleGAN，但原始CycleGAN�
 
 ### Clone：
 ```
-git clone https://github.com/minivision-ailab/photo2cartoon.git
+git clone https://github.com/minivision-ai/photo2cartoon.git
 cd ./photo2cartoon
 ```
 
 ### 下载资源
-[谷歌网盘](https://drive.google.com/open?id=1eDNGZT3jszHLXQ9XGIUPtcu72HdBmHuX) | [百度网盘](https://pan.baidu.com/s/1DxWWBAoaBpsei_rynZUZzw) 提取码:z2nm
+[谷歌网盘](https://drive.google.com/open?id=1lsQS8hOCquMFKJFhK_z-n03ixWGkjT2P) | [百度网盘](https://pan.baidu.com/s/1MsT3-He3UGipKhUi4OcCJw) 提取码:y2ch
 
-1. 人像卡通化预训练模型：photo2cartoon_weights.pt，存放在`models`路径下。
+1. 人像卡通化预训练模型：photo2cartoon_weights.pt(20200504更新)，存放在`models`路径下。
 2. 头像分割模型：seg_model_384.pb，存放在`utils`路径下。
 3. 人脸识别预训练模型：model_mobilefacenet.pth，存放在`models`路径下。（From: [InsightFace_Pytorch](https://github.com/TreB1eN/InsightFace_Pytorch)）
 4. 卡通画开源数据：`cartoon_data`，包含`trainB`和`testB`。
@@ -113,6 +117,11 @@ python train.py --dataset photo2cartoon
 python train.py --dataset photo2cartoon --pretrained_weights models/photo2cartoon_weights.pt
 ```
 
+多GPU训练(仍建议使用batch_size=1，单卡训练):
+```
+python train.py --dataset photo2cartoon --batch_size 4 --gpu_ids 0 1 2 3
+```
+
 ## Q&A
 #### Q：为什么开源的卡通化模型与小程序中的效果有差异？
 
@@ -129,7 +138,11 @@ A：实验中我们发现，使用自研的识别模型计算Face ID Loss训练�
 #### Q：人像分割模型是否能用与分割半身像？
 A：不能。该模型是针对本项目训练的专用模型，需先裁剪出人脸区域再输入。
 
+## Tips
+我们开源的模型是基于亚洲年轻女性训练的，对于其他人群覆盖不足，您可根据使用场景自行收集相应人群的数据进行训练。我们的[开放平台](https://ai.minivision.cn/#/coreability/cartoon)提供了能够覆盖各类人群的卡通化服务，您可前往体验。
+
 ## 参考
 U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance Normalization for Image-to-Image Translation [[Paper](https://arxiv.org/abs/1907.10830)][[Code](https://github.com/znxlwm/UGATIT-pytorch)]
 
 [InsightFace_Pytorch](https://github.com/TreB1eN/InsightFace_Pytorch)
+
